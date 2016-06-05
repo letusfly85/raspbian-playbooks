@@ -1,0 +1,16 @@
+---
+
+- name: download erlang deb file
+  get_url: url=https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb 
+           dest=/tmp/erlang-solutions_1.0_all.deb
+           force=True
+- name: install apt key
+  chdir: /tmp
+  shell: |
+    dpkg -i erlang-solutions_1.0_all.deb
+    sed -i -e "s/squeeze/jessie/g" /etc/apt/sources.list.d/erlang-solutions.list
+    apt-get update
+  environment: "{{ debian_frontend }}"
+- name: install elixir
+  apt: pkg={{item}} force=yes update_cache=yes
+  with_items: "{{ erlang_packages }}"

@@ -1,0 +1,17 @@
+---
+
+- name: install nvm
+  get_url: url=https://raw.githubusercontent.com/creationix/nvm/{{ nvm_version }}/install.sh 
+           dest=/tmp/install.sh
+  sudo: no
+- name: install nvm
+  chdir: /tmp
+  shell: bash install.sh
+- name: install node v6.2.0
+  shell: |
+    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" 
+    nvm install v6.2.0
+    nvm use v6.2.0
+    nvm alias default v6.2.0
+  environment: "{{ nvm_dir }}"
+  sudo: no

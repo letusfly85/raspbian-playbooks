@@ -1,0 +1,6 @@
+debian_frontend:
+  DEBIAN_FRONTEND: noninteractive
+
+erlang_packages:
+  - erlang
+  - elixir
